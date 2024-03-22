@@ -1,6 +1,6 @@
 {
   "name": "express-102-crud-and-mvc",
-  "module": "index.ts",
+  "module": "app.ts",
   "devDependencies": {
     "bun-types": "latest"
   },
