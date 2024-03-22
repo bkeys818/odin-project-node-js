@@ -1,0 +1,14 @@
+{
+  "name": "express-102-crud-and-mvc",
+  "module": "app.ts",
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "type": "module",
+  "dependencies": {
+    "mongoose": "^8.2.3"
+  }
+}
