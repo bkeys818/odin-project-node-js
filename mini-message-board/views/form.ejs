@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <style>
+        h1 {
+            text-align: center;
+        }
+        form {
+            width: 400px;
+            margin: 0 auto;
+        }
+        form *:not(:first-child) {
+            margin-top: 8px;
+        }
+        label {
+            display: block;
+        }
+        label, button {
+            font-size: 20px;
+        }
+        input, textarea {
+            width: 280px;
+        }
+        form>div {
+            display: flex;
+            align-items: top;
+            justify-content: space-between;
+        }
+    </style>
+  </head>
+  <body>
+<h1><%= title %></h1>
+<form method="POST" action="/new">
+    <div>
+        <label for="user">Name</label>
+        <input type="text" name="user" id="user">
+    </div>
+    <div>
+        <label for="text">Message</label>
+        <textarea name="text" id="" cols="30" rows="10"></textarea>
+    </div>
+    <button type="submit">Post</button>
+</form>
+  </body>
+</html>
