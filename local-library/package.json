@@ -1,14 +1,17 @@
 {
-  "name": "express-102-crud-and-mvc",
-  "module": "app.ts",
-  "devDependencies": {
-    "bun-types": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
-  "type": "module",
+  "name": "local-library",
+  "main": "app.js",
   "dependencies": {
     "mongoose": "^8.2.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./app.js",
+    "dev": "node --env-file=.env ./app.js",
+    "create-test-data": "node --env-file=.env ./populatedb.mjs"
   }
 }

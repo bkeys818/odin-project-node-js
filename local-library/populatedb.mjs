@@ -1,7 +1,7 @@
-import BookModel from './models/book'
-import AuthorModel from './models/author'
-import GenreModel from './models/genre'
-import BookInstanceModel from './models/bookinstance'
+import BookModel from './models/book.js'
+import AuthorModel from './models/author.js'
+import GenreModel from './models/genre.js'
+import BookInstanceModel from './models/bookinstance.js'
 
 const genres = []
 const authors = []
@@ -19,10 +19,10 @@ async function main() {
     console.log('Debug: About to connect')
     await mongoose.connect(mongoDB)
     console.log('Debug: Should be connected?')
-    await createGenres()
-    await createAuthors()
-    await createBooks()
-    await createBookInstances()
+    // await createGenres()
+    // await createAuthors()
+    // await createBooks()
+    // await createBookInstances()
     console.log('Debug: Closing mongoose')
     mongoose.connection.close()
 }
