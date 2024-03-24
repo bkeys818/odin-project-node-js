@@ -6,11 +6,11 @@ export interface Genre {
 }
 
 const GenreSchema = new Schema<Genre>({
-    name: { type: String, minlength: 3, maxlength: 100, required: true }
+    name: { type: String, minlength: 3, maxlength: 100, required: true },
 })
 
-GenreSchema.virtual('url').get(function() {
-    return `/catalog/genre/${this._id}`;
+GenreSchema.virtual('url').get(function () {
+    return `/catalog/genre/${this._id}`
 })
 
 export default model('Genre', GenreSchema)
