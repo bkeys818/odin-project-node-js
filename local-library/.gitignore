@@ -5,4 +5,7 @@ node_modules/
 .env
 
 # complied output
-lib
+**/*.js
+!bin/**/*.js
+**/*.map
+**/*.d.ts
