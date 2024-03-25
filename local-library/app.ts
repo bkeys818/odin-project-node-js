@@ -7,13 +7,13 @@ import mongoose from 'mongoose'
 
 import indexRouter from './routes/index'
 import usersRouter from './routes/users'
-import catalogRouter from "./routes/catalog"
+import catalogRouter from './routes/catalog'
 
 const app = express()
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'ejs')
+app.set('view engine', 'pug')
 
 app.use(logger('dev'))
 app.use(express.json())
