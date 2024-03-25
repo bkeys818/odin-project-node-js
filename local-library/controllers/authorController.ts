@@ -4,7 +4,11 @@ import Author from '../models/author'
 // Display list of all Authors.
 
 export const authorList = asyncHandler(async (req, res, next) => {
-    res.send('NOT IMPLEMENTED: Author list')
+    const allAuthors = await Author.find().sort({ family_name: 1 }).exec()
+    res.render('author-list', {
+        title: 'Author List',
+        author_list: allAuthors,
+    })
 })
 
 // Display detail page for a specific Author.
