@@ -1,14 +1,29 @@
 {
-  "name": "express-102-crud-and-mvc",
-  "module": "app.ts",
-  "devDependencies": {
-    "bun-types": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
-  "type": "module",
-  "dependencies": {
-    "mongoose": "^8.2.3"
-  }
+    "name": "local-library",
+    "main": "app.js",
+    "dependencies": {
+        "cookie-parser": "^1.4.6",
+        "debug": "^4.3.4",
+        "express": "^4.19.1",
+        "express-async-handler": "^1.2.0",
+        "http-errors": "^2.0.0",
+        "mongoose": "^8.2.3",
+        "morgan": "^1.10.0",
+        "pug": "^3.0.2"
+    },
+    "devDependencies": {
+        "@types/cookie-parser": "^1.4.7",
+        "@types/morgan": "^1.9.9",
+        "@types/node": "^20.11.30",
+        "prettier": "^3.2.5",
+        "typescript": "^5.0.0"
+    },
+    "scripts": {
+        "build": "tsc",
+        "build:w": "tsc -w",
+        "start": "node ./bin/www",
+        "dev": "node --env-file=.env ./bin/www",
+        "dev:w": "node --watch --env-file=.env ./bin/www",
+        "create-test-data": "node --env-file=.env ./populatedb.mjs"
+    }
 }
