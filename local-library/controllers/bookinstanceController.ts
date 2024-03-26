@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler'
 import BookInstance from '../models/bookinstance'
+import StatusError from '../utils/statusError'
 
 // Display list of all BookInstances.
 export const bookinstanceList = asyncHandler(async (req, res, next) => {
@@ -13,7 +14,19 @@ export const bookinstanceList = asyncHandler(async (req, res, next) => {
 
 // Display detail page for a specific BookInstance.
 export const bookinstanceDetail = asyncHandler(async (req, res, next) => {
-    res.send(`NOT IMPLEMENTED: BookInstance detail: ${req.params.id}`)
+    const bookInstance = await BookInstance.findById(req.params.id)
+        .populate('book')
+        .exec()
+    if (bookInstance === null) {
+        // No results.
+        const err = new StatusError('Genre not found')
+        err.status = 404
+        return next(err)
+    }
+    res.render('bookinstance-detail', {
+        title: 'Book: ',
+        bookinstance: bookInstance,
+    })
 })
 
 // Display BookInstance create form on GET.
