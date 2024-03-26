@@ -7,12 +7,14 @@
         "express": "^4.19.1",
         "express-async-handler": "^1.2.0",
         "http-errors": "^2.0.0",
+        "luxon": "^3.4.4",
         "mongoose": "^8.2.3",
         "morgan": "^1.10.0",
         "pug": "^3.0.2"
     },
     "devDependencies": {
         "@types/cookie-parser": "^1.4.7",
+        "@types/luxon": "^3.4.2",
         "@types/morgan": "^1.9.9",
         "@types/node": "^20.11.30",
         "prettier": "^3.2.5",
