@@ -1,4 +1,5 @@
 import asyncHandler from 'express-async-handler'
+import { body, validationResult } from 'express-validator'
 import Genre from '../models/genre'
 import Book from '../models/book'
 import StatusError from '../utils/statusError'
@@ -33,13 +34,30 @@ export const genreDetail = asyncHandler(async (req, res, next) => {
 
 // Display Genre create form on GET.
 export const genreCreateGet = asyncHandler(async (req, res, next) => {
-    res.send('NOT IMPLEMENTED: Genre create GET')
+    res.render('genre-form', { title: 'Create Genre' })
 })
 
 // Handle Genre create on POST.
-export const genreCreatePost = asyncHandler(async (req, res, next) => {
-    res.send('NOT IMPLEMENTED: Genre create POST')
-})
+export const genreCreatePost = [
+    body('name', 'Genre name must contain at least 3 characters')
+        .trim()
+        .isLength({ min: 3 })
+        .escape(),
+    asyncHandler(async (req, res, next) => {
+        const errors = validationResult(req)
+        const genre = new Genre({ name: req.body.name })
+        if (!errors.isEmpty()) {
+            res.render('genre-form', {
+                title: 'Create Genre',
+                genre: genre,
+                errors: errors.array(),
+            })
+        } else {
+            await genre.save()
+            res.redirect(genre.url)
+        }
+    }),
+]
 
 // Display Genre delete form on GET.
 export const genreDeleteGet = asyncHandler(async (req, res, next) => {
