@@ -3,7 +3,11 @@ import Genre from '../models/genre'
 
 // Display list of all Genre.
 export const genreList = asyncHandler(async (req, res, next) => {
-    res.send('NOT IMPLEMENTED: Genre list')
+    const allGenres = await Genre.find().exec()
+    res.render('genre-list', {
+        title: 'Book Instance List',
+        genre_list: allGenres,
+    })
 })
 
 // Display detail page for a specific Genre.
