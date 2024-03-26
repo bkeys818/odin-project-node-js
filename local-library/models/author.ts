@@ -9,6 +9,7 @@ export interface Author {
     date_of_birth_formatted?: string
     date_of_death?: Date
     date_of_death_formatted?: string
+    liftspan: string
     url: string
 }
 
@@ -47,6 +48,10 @@ AuthorSchema.virtual('date_of_death_formatted').get(function () {
               DateTime.DATE_MED,
           )
         : ''
+})
+
+AuthorSchema.virtual('lifespan').get(function () {
+    return this.date_of_birth_formatted + ' - ' + this.date_of_death_formatted
 })
 
 export default model('Author', AuthorSchema)
