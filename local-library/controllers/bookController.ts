@@ -3,6 +3,7 @@ import Book from '../models/book'
 import BookInstance from '../models/bookinstance'
 import Author from '../models/author'
 import Genre from '../models/genre'
+import StatusError from '../utils/statusError'
 
 export const index = asyncHandler(async (req, res, next) => {
     const [
@@ -41,7 +42,24 @@ export const bookList = asyncHandler(async (req, res, next) => {
 
 // Display detail page for a specific book.
 export const bookDetail = asyncHandler(async (req, res, next) => {
-    res.send(`NOT IMPLEMENTED: Book detail: ${req.params.id}`)
+    const [book, bookInstances] = await Promise.all([
+        Book.findById(req.params.id)
+            .populate('author')
+            .populate('genre')
+            .exec(),
+        BookInstance.find({ book: req.params.id }).exec(),
+    ])
+    if (book === null) {
+        // No results.
+        const err = new StatusError('Book not found')
+        err.status = 404
+        return next(err)
+    }
+    res.render('book-detail', {
+        title: book.title,
+        book: book,
+        book_instances: bookInstances,
+    })
 })
 
 // Display book create form on GET.
