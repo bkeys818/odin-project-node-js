@@ -6,6 +6,7 @@
         "debug": "^4.3.4",
         "express": "^4.19.1",
         "express-async-handler": "^1.2.0",
+        "express-validator": "^7.0.1",
         "http-errors": "^2.0.0",
         "luxon": "^3.4.4",
         "mongoose": "^8.2.3",
