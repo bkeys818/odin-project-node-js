@@ -2,6 +2,7 @@ import createError from 'http-errors'
 import express, { ErrorRequestHandler } from 'express'
 import path from 'path'
 import cookieParser from 'cookie-parser'
+import compression from 'compression'
 import logger from 'morgan'
 import mongoose from 'mongoose'
 
@@ -15,10 +16,11 @@ const app = express()
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
 
-app.use(logger('dev'))
+if (process.env.NODE_ENV == 'dev') app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
+app.use(compression())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRouter)
