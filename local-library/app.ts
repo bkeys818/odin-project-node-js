@@ -3,6 +3,7 @@ import express, { ErrorRequestHandler } from 'express'
 import path from 'path'
 import cookieParser from 'cookie-parser'
 import compression from 'compression'
+import { contentSecurityPolicy } from 'helmet'
 import logger from 'morgan'
 import mongoose from 'mongoose'
 
@@ -11,6 +12,14 @@ import usersRouter from './routes/users'
 import catalogRouter from './routes/catalog'
 
 const app = express()
+
+app.use(
+    contentSecurityPolicy({
+        directives: {
+            'script-src': ["'self'", 'code.jquery.com', 'cdn.jsdelivr.net'],
+        },
+    }),
+)
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
