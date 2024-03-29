@@ -2,6 +2,7 @@
     "name": "local-library",
     "main": "app.js",
     "dependencies": {
+        "compression": "^1.7.4",
         "cookie-parser": "^1.4.6",
         "debug": "^4.3.4",
         "express": "^4.19.1",
@@ -14,6 +15,7 @@
         "pug": "^3.0.2"
     },
     "devDependencies": {
+        "@types/compression": "^1.7.5",
         "@types/cookie-parser": "^1.4.7",
         "@types/luxon": "^3.4.2",
         "@types/morgan": "^1.9.9",
