@@ -4,6 +4,7 @@ import path from 'path'
 import cookieParser from 'cookie-parser'
 import compression from 'compression'
 import { contentSecurityPolicy } from 'helmet'
+import rateLimit from 'express-rate-limit'
 import logger from 'morgan'
 import mongoose from 'mongoose'
 
@@ -20,6 +21,7 @@ app.use(
         },
     }),
 )
+app.use(rateLimit({ windowMs: 1 * 60 * 1000, max: 20 }))
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
