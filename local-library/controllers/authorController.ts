@@ -71,7 +71,7 @@ export const authorCreatePost = [
             date_of_death: req.body.date_of_death,
         })
         if (!errors.isEmpty()) {
-            res.render('genre-form', {
+            res.render('author-form', {
                 title: 'Create Author',
                 author,
                 errors: errors.array(),
@@ -127,10 +127,61 @@ export const authorDeletePost = asyncHandler(async (req, res, next) => {
 
 // Display Author update form on GET.
 export const authorUpdateGet = asyncHandler(async (req, res, next) => {
-    res.send('NOT IMPLEMENTED: Author update GET')
+    const author = await Author.findById(req.params.id).exec()
+    if (author === null) {
+        const err = new StatusError('Book instance not found')
+        err.status = 404
+        return next(err)
+    }
+    res.render('author-form', { title: 'Update Author', author })
 })
 
 // Handle Author update on POST.
-export const authorUpdatePost = asyncHandler(async (req, res, next) => {
-    res.send('NOT IMPLEMENTED: Author update POST')
-})
+export const authorUpdatePost = [
+    body('first_name')
+        .trim()
+        .isLength({ min: 1 })
+        .escape()
+        .withMessage('First name must be specified.')
+        .isAlphanumeric()
+        .withMessage('First name has non-alphanumeric characters.'),
+    body('family_name')
+        .trim()
+        .isLength({ min: 1 })
+        .escape()
+        .withMessage('Family name must be specified.')
+        .isAlphanumeric()
+        .withMessage('Family name has non-alphanumeric characters.'),
+    body('date_of_birth', 'Invalid date of birth')
+        .optional({ values: 'falsy' })
+        .isISO8601()
+        .toDate(),
+    body('date_of_death', 'Invalid date of death')
+        .optional({ values: 'falsy' })
+        .isISO8601()
+        .toDate(),
+    asyncHandler(async (req, res, next) => {
+        const errors = validationResult(req)
+        const author = new Author({
+            _id: req.params.id,
+            first_name: req.body.first_name,
+            family_name: req.body.family_name,
+            date_of_birth: req.body.date_of_birth,
+            date_of_death: req.body.date_of_death,
+        })
+        if (!errors.isEmpty()) {
+            res.render('author-form', {
+                title: 'Update Author',
+                author,
+                errors: errors.array(),
+            })
+        } else {
+            const updatedAuthor = await Author.findByIdAndUpdate(
+                req.params.id,
+                author,
+                {},
+            )
+            res.redirect(updatedAuthor!.url)
+        }
+    }),
+]
