@@ -8,6 +8,7 @@ export interface BookInstance {
     status: 'Available' | 'Maintenance' | 'Loaned' | 'Reserved'
     due_back?: Date
     due_back_formatted?: string
+    due_back_yyyy_mm_dd?: string
     url: string
 }
 
@@ -33,6 +34,10 @@ BookInstanceSchema.virtual('due_back_formatted').get(function () {
         return DateTime.fromJSDate(this.due_back).toLocaleString(
             DateTime.DATE_MED,
         )
+})
+
+BookInstanceSchema.virtual('due_back_yyyy_mm_dd').get(function () {
+    if (this.due_back) return DateTime.fromJSDate(this.due_back).toISODate() // format 'YYYY-MM-DD'
 })
 
 export default model('BookInstance', BookInstanceSchema)

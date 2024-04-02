@@ -2,6 +2,9 @@ import createError from 'http-errors'
 import express, { ErrorRequestHandler } from 'express'
 import path from 'path'
 import cookieParser from 'cookie-parser'
+import compression from 'compression'
+import { contentSecurityPolicy } from 'helmet'
+import rateLimit from 'express-rate-limit'
 import logger from 'morgan'
 import mongoose from 'mongoose'
 
@@ -11,14 +14,24 @@ import catalogRouter from './routes/catalog'
 
 const app = express()
 
+app.use(
+    contentSecurityPolicy({
+        directives: {
+            'script-src': ["'self'", 'code.jquery.com', 'cdn.jsdelivr.net'],
+        },
+    }),
+)
+app.use(rateLimit({ windowMs: 1 * 60 * 1000, max: 20 }))
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
 
-app.use(logger('dev'))
+if (process.env.NODE_ENV == 'dev') app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
+app.use(compression())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRouter)
