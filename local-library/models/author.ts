@@ -1,11 +1,15 @@
 import { Schema, model } from 'mongoose'
+import { DateTime } from 'luxon'
 
 export interface Author {
     first_name: string
     family_name: string
     name: string
     date_of_birth?: Date
+    date_of_birth_form_value?: string
     date_of_death?: Date
+    date_of_death_form_value?: string
+    liftspan: string
     url: string
 }
 
@@ -28,6 +32,34 @@ AuthorSchema.virtual('name').get(function () {
 // Virtual for author's URL
 AuthorSchema.virtual('url').get(function () {
     return `/catalog/author/${this._id}`
+})
+
+AuthorSchema.virtual('lifespan').get(function () {
+    return (
+        (this.date_of_death
+            ? DateTime.fromJSDate(this.date_of_death).toLocaleString(
+                  DateTime.DATE_MED,
+              )
+            : '') +
+        ' - ' +
+        (this.date_of_birth
+            ? DateTime.fromJSDate(this.date_of_birth).toLocaleString(
+                  DateTime.DATE_MED,
+              )
+            : '')
+    )
+})
+
+AuthorSchema.virtual('date_of_birth_form_value').get(function () {
+    return this.date_of_birth
+        ? DateTime.fromJSDate(this.date_of_birth).toISODate()
+        : ''
+})
+
+AuthorSchema.virtual('date_of_death_form_value').get(function () {
+    return this.date_of_death
+        ? DateTime.fromJSDate(this.date_of_death).toISODate()
+        : ''
 })
 
 export default model('Author', AuthorSchema)
